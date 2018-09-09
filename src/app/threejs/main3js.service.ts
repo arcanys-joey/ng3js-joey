@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { THREEJS_TOKEN, CONFIG_TOKEN } from './threejs.tokens';
+import { THREEJS_TOKEN, CONFIG_TOKEN, ORBIT_CONTROLS_TOKEN } from './threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, OrbitControls } from 'three';
 import { Config } from './config';
 
@@ -8,7 +8,8 @@ export class Main3jsService {
 
   constructor(
     @Inject(THREEJS_TOKEN) private THREE,
-    @Inject(CONFIG_TOKEN) private config: Config
+    @Inject(CONFIG_TOKEN) private config: Config,
+    @Inject(ORBIT_CONTROLS_TOKEN) private orbitControls: any
   ) {
     
   }
@@ -84,8 +85,8 @@ export class Main3jsService {
    * 
    * @param camera 
    */
-  public getOrbitControls(camera: PerspectiveCamera): OrbitControls {
-    return new this.THREE.OrbitControls(camera);
+  public getOrbitControls(camera: PerspectiveCamera, canvas: HTMLCanvasElement): OrbitControls {
+    return new this.orbitControls(camera, canvas);
   }
 
 }

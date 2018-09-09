@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
 import { Main3jsService } from 'src/app/threejs/main3js.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
-import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh } from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 
 @Component({
   selector: 'app-basic-cube',
@@ -13,6 +13,9 @@ export class BasicCubeComponent implements AfterViewInit {
   private scene: Scene;
   private camera: PerspectiveCamera;
   private renderer: WebGLRenderer;
+  private cube: Mesh;
+  private light: SpotLight;
+  private controls: OrbitControls;
 
   /**
    * @property
@@ -35,6 +38,11 @@ export class BasicCubeComponent implements AfterViewInit {
    * 
    */
   ngAfterViewInit() {
+    this.initVars();
+    this.startRenderLoop();
+  }
+
+  private initVars(): void {
     this.scene = this.main3jsService.getScene();
     this.renderer = this.main3jsService.getRenderer(this.canvas, true);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
@@ -42,7 +50,21 @@ export class BasicCubeComponent implements AfterViewInit {
       aspectRatio: this.canvas.clientWidth / this.canvas.clientHeight,
       cameraZPos: 10
     });
-    this.startRenderLoop();
+    this.camera.position.z = 5;
+    this.controls = this.main3jsService.getOrbitControls(this.camera, this.canvas);
+    this.cube = this.createCube();
+    this.light = this.createLight();    
+    this.scene.add(this.light);
+    this.scene.add(this.cube);
+  }
+
+  /**
+   * 
+   */
+  private createLight(): SpotLight {
+    const light = new this.THREE.SpotLight(0xffffff);
+    light.position.set(30, 100, 30);
+    return light;
   }
 
   /**
@@ -50,7 +72,11 @@ export class BasicCubeComponent implements AfterViewInit {
    */
   private createCube(): Mesh {
     const geometry = new this.THREE.BoxBufferGeometry(1, 1, 1);
-    const material = new this.THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new this.THREE.MeshLambertMaterial({ 
+      color: 0x8b8b96,
+      ambient: 0x8b8b96,
+      emissive: 0x8b8b96
+    });
     const cube = new this.THREE.Mesh(geometry, material);
     return cube;
   }
@@ -59,15 +85,12 @@ export class BasicCubeComponent implements AfterViewInit {
    * 
    */
   private startRenderLoop(): void {
-    
-    const cube = this.createCube();
-    this.scene.add(cube);
-
-    this.camera.position.z = 5;
+    this.controls.update();
     const animate = () => {
       requestAnimationFrame(animate);    
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;    
+      this.cube.rotation.x += 0.01;
+      this.cube.rotation.y += 0.01;    
+      this.controls.update();
       this.renderer.render(this.scene, this.camera);
     };
     animate();
