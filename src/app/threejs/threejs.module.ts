@@ -4,7 +4,7 @@ import { Main3jsService } from './main3js.service';
 import { ConfigService } from './config.service';
 import { THREEJS_TOKEN, CONFIG_TOKEN, DEFAULT_CONFIG_TOKEN } from './threejs.tokens';
 import * as THREE from 'three';
-import { Config } from 'threejs/config';
+import { Config } from './config';
 
 @NgModule({
   imports: [

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { THREEJS_TOKEN, CONFIG_TOKEN } from './threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, OrbitControls } from 'three';
-import { Config } from 'threejs/config';
+import { Config } from './config';
 
 @Injectable()
 export class Main3jsService {

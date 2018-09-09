@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Config } from 'threejs/config';
+import { Config } from './config';
 import { CONFIG_TOKEN } from './threejs.tokens';
 
 @Injectable()
