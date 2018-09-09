@@ -42,12 +42,22 @@ export class BasicCubeComponent implements AfterViewInit {
     this.startRenderLoop();
   }
 
+  /**
+   * 
+   */
+  private getAspectRatio(): number {
+    return this.canvas.clientWidth / this.canvas.clientHeight;
+  }
+
+  /**
+   * 
+   */
   private initVars(): void {
     this.scene = this.main3jsService.getScene();
     this.renderer = this.main3jsService.getRenderer(this.canvas, true);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.camera = this.main3jsService.getCamera({
-      aspectRatio: this.canvas.clientWidth / this.canvas.clientHeight,
+      aspectRatio: this.getAspectRatio(),
       cameraZPos: 10
     });
     this.camera.position.z = 5;
@@ -80,6 +90,16 @@ export class BasicCubeComponent implements AfterViewInit {
     const cube = new this.THREE.Mesh(geometry, material);
     return cube;
   }
+
+  /**
+   * 
+   */
+  public onResize() {
+    this.camera.aspect = this.getAspectRatio();
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+  }
+
 
   /**
    * 

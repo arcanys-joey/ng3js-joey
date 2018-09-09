@@ -6,9 +6,13 @@ const routes: Routes = [
     path: 'basic-cube',
     loadChildren: './basic-cube/basic-cube.module#BasicCubeModule'
   },
+  {
+    path: 'wth-cube',
+    loadChildren: './wth-cube/wth-cube.module#WthCubeModule'
+  },
   { 
     path: '',
-    redirectTo: '/basic-cube',
+    redirectTo: '/wth-cube',
     pathMatch: 'full' 
   },
 ];
