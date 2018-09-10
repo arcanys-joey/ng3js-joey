@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'wth-cube',
     loadChildren: './wth-cube/wth-cube.module#WthCubeModule'
   },
+  {
+    path: 'simple-wall',
+    loadChildren: './simple-wall/simple-wall.module#SimpleWallModule'
+  },
   { 
     path: '',
     redirectTo: '/wth-cube',

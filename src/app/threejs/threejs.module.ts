@@ -2,6 +2,7 @@ import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core
 import { CommonModule } from '@angular/common';
 import { Main3jsService } from './main3js.service';
 import { ConfigService } from './config.service';
+import { UtilsService } from './utils.service';
 import { THREEJS_TOKEN, CONFIG_TOKEN, ORBIT_CONTROLS_TOKEN } from './threejs.tokens';
 import * as THREE from 'three';
 import { Config } from './config';
@@ -25,6 +26,7 @@ import { OrbitControls } from '@avatsaev/three-orbitcontrols-ts';
       provide: THREEJS_TOKEN,
       useValue: THREE
     },
+    UtilsService,
     Main3jsService
   ]
 })
@@ -55,7 +57,8 @@ export class ThreejsModule {
           provide: THREEJS_TOKEN,
           useValue: THREE
         },
-        Main3jsService
+        Main3jsService,
+        UtilsService
       ]
     };
   }
