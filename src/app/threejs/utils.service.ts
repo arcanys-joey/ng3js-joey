@@ -27,4 +27,23 @@ export class UtilsService {
     return meter / 1000;
   }
 
+  /**
+   * 
+   * @param width 
+   * @param length 
+   * @param depth 
+   */
+  public translateToThree(width: number, length: number, depth: number): { width: number, length: number, depth: number } {
+
+    const widthTranslate = this.convertoToMillimeter(width);
+    const lengthTranslate = this.convertoToMillimeter(length);
+    const depthTranslate = this.convertoToMillimeter(depth);
+
+    return {
+      width: lengthTranslate,
+      length: widthTranslate,
+      depth: depthTranslate
+    };
+  }
+
 }

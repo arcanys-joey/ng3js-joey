@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: './wth-cube/wth-cube.module#WthCubeModule'
   },
   {
+    path: 'render-test',
+    loadChildren: './render-test/render-test.module#RenderTestModule'
+  },
+  {
     path: 'simple-wall',
     loadChildren: './simple-wall/simple-wall.module#SimpleWallModule'
   },
