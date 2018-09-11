@@ -27,8 +27,8 @@ export class TranslateService {
     // for parts that are rotated 90, offset the positioning of X and Y
     if (Math.abs(cubeData.rotation.y)) {
       position = {
-        x: position.x + -((dimensions.width / 2) + (dimensions.length / 2)),
-        y: position.y + ((dimensions.width / 2) - (dimensions.length / 2)),
+        x: position.x + -(this.utilsService.convertoToMillimeter(length) + this.utilsService.convertoToMillimeter(length)),
+        y: position.y + (this.utilsService.convertoToMillimeter(length) - this.utilsService.convertoToMillimeter(length)),
         z: position.z
       };
     }
