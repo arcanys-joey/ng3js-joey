@@ -39,7 +39,7 @@ export class SimpleWallComponent implements AfterViewInit {
     private main3jsService: Main3jsService,
     private utilsService: UtilsService,
     private cubeDataService: CubeDataService,
-    private cubeService: CubeService,
+    private cubeService: CubeService,    
     @Inject(THREEJS_TOKEN) private THREE
   ) { }
 
@@ -49,6 +49,8 @@ export class SimpleWallComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.initVars();
     this.renderTopPlates();
+    this.renderBottomPlates();
+    this.renderCommonStuds();
     this.startRenderLoop();
   }
 
@@ -103,12 +105,36 @@ export class SimpleWallComponent implements AfterViewInit {
       const topPlate = topPlates[i];
       const cubeData: CubeData = this.cubeDataService.extractCubeData(topPlate);
       const cube = this.cubeService.getCube(cubeData);
-      console.log('cube position', cube.position);
-      console.log('cube rotation', cube.rotation);
       this.scene.add(cube);
     }
   }
 
+  /**
+   * 
+   */
+  private renderBottomPlates(): void {
+    const bottomPlates = this.wallComponentsService.getBottomPlates() as any;
+    for (let i = 0; i < bottomPlates.length; i++) {
+      const bottomPlate = bottomPlates[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(bottomPlate);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+    }
+  }
+
+  /**
+   * 
+   */
+  private renderCommonStuds(): void {
+    const commonStuds = this.wallComponentsService.getCommonStuds() as any;
+    for (let i = 0; i < commonStuds.length; i++) {
+      const commonStud = commonStuds[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(commonStud);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+      break;
+    }
+  }
 
   /**
    * 

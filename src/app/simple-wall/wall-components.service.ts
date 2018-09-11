@@ -58,5 +58,27 @@ export class WallComponentsService {
     }
     return topPlates;
   }
+
+  /**
+   * 
+   */
+  public getBottomPlates() {
+    let bottomPlates = [];
+    for (let i = 0; i < this.wallFrames.length; i++) {      
+      bottomPlates = bottomPlates.concat(this.wallFrames[i].bottom_plates);
+    }
+    return bottomPlates;
+  }
+
+  /**
+   * 
+   */
+  public getCommonStuds() {
+    let commonStuds = [];
+    for (let i = 0; i < this.wallFrames.length; i++) {      
+      commonStuds = commonStuds.concat(this.wallFrames[i].common_studs);
+    }
+    return commonStuds;
+  }
   
 }

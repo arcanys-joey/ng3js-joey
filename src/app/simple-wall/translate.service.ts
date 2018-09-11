@@ -76,7 +76,21 @@ export class TranslateService {
    * @param rotation 
    */
   public translateRotation(rotation: Axes): Axes {
-    return rotation;
+
+    let rotateXTranslate: number;
+    let rotateYTranslate: number;
+    let rotateZTranslate: number;
+
+    if (this.adaptToSketchUp) {
+      rotateXTranslate = this.utilsService.radian(rotation.x);
+      rotateYTranslate = this.utilsService.radian(rotation.z);
+      rotateZTranslate = this.utilsService.radian(rotation.y);
+    }
+
+    return {
+      x: rotateXTranslate, y: rotateYTranslate, z: rotateZTranslate
+    };
+    
   }
 
 }
