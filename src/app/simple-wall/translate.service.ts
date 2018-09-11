@@ -21,8 +21,17 @@ export class TranslateService {
   public translateCubeData(cubeData: CubeData): CubeData {
     const cubeDataTranslate = { ...cubeData };
     const dimensions = this.translateDimensions(cubeData.width, cubeData.length, cubeData.depth);
-    const position = this.translatePosition(cubeData.position);
+    let position = this.translatePosition(cubeData.position);
     const rotation = this.translateRotation(cubeData.rotation);
+
+    // for parts that are rotated 90, offset the positioning of X and Y
+    if (Math.abs(cubeData.rotation.y)) {
+      position = {
+        x: position.x + -((dimensions.width / 2) + (dimensions.length / 2)),
+        y: position.y + ((dimensions.width / 2) - (dimensions.length / 2)),
+        z: position.z
+      };
+    }
 
     return {
       width: dimensions.width,
@@ -65,7 +74,7 @@ export class TranslateService {
       return {
         x: this.utilsService.convertoToMillimeter(position.x),
         y: this.utilsService.convertoToMillimeter(position.z),
-        z: this.utilsService.convertoToMillimeter(position.y)
+        z: -(this.utilsService.convertoToMillimeter(position.y))
       };
     }
     return position;

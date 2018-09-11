@@ -51,6 +51,7 @@ export class SimpleWallComponent implements AfterViewInit {
     this.renderTopPlates();
     this.renderBottomPlates();
     this.renderCommonStuds();
+    this.renderNogs();
     this.startRenderLoop();
   }
 
@@ -132,7 +133,19 @@ export class SimpleWallComponent implements AfterViewInit {
       const cubeData: CubeData = this.cubeDataService.extractCubeData(commonStud);
       const cube = this.cubeService.getCube(cubeData);
       this.scene.add(cube);
-      break;
+    }
+  }
+
+  /**
+   * 
+   */
+  private renderNogs(): void {
+    const nogs = this.wallComponentsService.getNogs() as any;
+    for (let i = 0; i < nogs.length; i++) {
+      const nog = nogs[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(nog);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
     }
   }
 

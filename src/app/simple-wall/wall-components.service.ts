@@ -80,5 +80,17 @@ export class WallComponentsService {
     }
     return commonStuds;
   }
+
+  /**
+   * 
+   */
+  public getNogs() {
+    let nogs = [];
+    for (let i = 0; i < this.wallFrames.length; i++) {      
+      nogs = nogs.concat(this.wallFrames[i].nogs);
+    }
+    return nogs;
+  }
+
   
 }
