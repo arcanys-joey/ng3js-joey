@@ -1,17 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
-import { Main3jsService } from 'src/app/threejs/main3js.service';
-import { UtilsService } from 'src/app/threejs/utils.service';
+import { Main3jsService } from 'src/app/threejs/services/main3js.service';
+import { UtilsService } from 'src/app/threejs/services/utils.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 
 // borrowing this service from the simple wall, this is not correct and should be refactored if this comes up again
-import { TranslateService } from 'src/app/simple-wall/translate.service';
+import { TranslateService } from 'src/app/threejs/services/translate.service';
 
 @Component({
   selector: 'app-render-test',
   templateUrl: './render-test.component.html',
-  styleUrls: ['./render-test.component.scss'],
-  providers: [ TranslateService ]
+  styleUrls: ['./render-test.component.scss']
 })
 export class RenderTestComponent implements AfterViewInit {
 

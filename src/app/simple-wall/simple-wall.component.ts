@@ -1,12 +1,12 @@
 import { Component, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
-import { Main3jsService } from 'src/app/threejs/main3js.service';
-import { UtilsService } from 'src/app/threejs/utils.service';
+import { Main3jsService } from 'src/app/threejs/services/main3js.service';
+import { UtilsService } from 'src/app/threejs/services/utils.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 import { WallComponentsService } from './wall-components.service';
-import { CubeData } from './icube';
-import { CubeDataService } from './cube-data.service';
-import { CubeService } from './cube.service';
+import { CubeData } from '../threejs/services/icube';
+import { CubeDataService } from 'src/app/threejs/services/cube-data.service';
+import { CubeService } from 'src/app/threejs/services/cube.service';
 
 @Component({
   selector: 'app-simple-wall',

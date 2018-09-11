@@ -1,8 +1,11 @@
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Main3jsService } from './main3js.service';
-import { ConfigService } from './config.service';
-import { UtilsService } from './utils.service';
+import { Main3jsService } from './services/main3js.service';
+import { ConfigService } from './services/config.service';
+import { UtilsService } from './services/utils.service';
+import { TranslateService } from './services/translate.service';
+import { CubeDataService } from './services/cube-data.service';
+import { CubeService } from './services/cube.service';
 import { THREEJS_TOKEN, CONFIG_TOKEN, ORBIT_CONTROLS_TOKEN } from './threejs.tokens';
 import * as THREE from 'three';
 import { Config } from './config';
@@ -27,7 +30,10 @@ import { OrbitControls } from '@avatsaev/three-orbitcontrols-ts';
       useValue: THREE
     },
     UtilsService,
-    Main3jsService
+    TranslateService,
+    Main3jsService,
+    CubeDataService,
+    CubeService
   ]
 })
 export class ThreejsModule {
@@ -58,7 +64,9 @@ export class ThreejsModule {
           useValue: THREE
         },
         Main3jsService,
-        UtilsService
+        UtilsService,
+        CubeDataService,
+        CubeService
       ]
     };
   }
