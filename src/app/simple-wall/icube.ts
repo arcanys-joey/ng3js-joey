@@ -36,10 +36,5 @@ export interface CubeData {
    * @property
    */
   length: number;
-
-  /**
-   * @property
-   * only appears on some timber types, use this over length if defined
-   */
-  height?: number;
+  
 }

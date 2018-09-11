@@ -4,6 +4,9 @@ import { UtilsService } from 'src/app/threejs/utils.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 import { WallComponentsService } from './wall-components.service';
+import { CubeData } from './icube';
+import { CubeDataService } from './cube-data.service';
+import { CubeService } from './cube.service';
 
 @Component({
   selector: 'app-simple-wall',
@@ -35,6 +38,8 @@ export class SimpleWallComponent implements AfterViewInit {
     private wallComponentsService: WallComponentsService,
     private main3jsService: Main3jsService,
     private utilsService: UtilsService,
+    private cubeDataService: CubeDataService,
+    private cubeService: CubeService,
     @Inject(THREEJS_TOKEN) private THREE
   ) { }
 
@@ -43,6 +48,7 @@ export class SimpleWallComponent implements AfterViewInit {
    */
   ngAfterViewInit() {
     this.initVars();
+    this.renderTopPlates();
     this.startRenderLoop();
   }
 
@@ -82,10 +88,25 @@ export class SimpleWallComponent implements AfterViewInit {
   /**
    * 
    */
-  public onResize() {
+  public onResize(): void {
     this.camera.aspect = this.getAspectRatio();
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+  }
+
+  /**
+   * 
+   */
+  private renderTopPlates(): void {
+    const topPlates = this.wallComponentsService.getTopPlates() as any;
+    for (let i = 0; i < topPlates.length; i++) {
+      const topPlate = topPlates[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(topPlate);
+      const cube = this.cubeService.getCube(cubeData);
+      console.log('cube position', cube.position);
+      console.log('cube rotation', cube.rotation);
+      this.scene.add(cube);
+    }
   }
 
 

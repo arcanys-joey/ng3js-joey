@@ -17,11 +17,12 @@ export class CubeService {
   /**
    * 
    * @param cubeData 
-   *
+   */
   public getCube(cubeData: CubeData): Mesh {
-    
+    const cubePan: CubePan = this.getCubePan(cubeData);
+    return cubePan.getCube();
   }
-  */
+
 
   /**
    * 
@@ -31,7 +32,7 @@ export class CubeService {
     const injector = ReflectiveInjector.resolveAndCreate([
       {
         provide: CUBE_DATA,
-        useValue: cubeData
+        useValue: this.translateService.translateCubeData(cubeData)
       },
       {
         provide: THREEJS_TOKEN,

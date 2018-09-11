@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Dimensions } from './icube';
+import { Dimensions, Axes, CubeData } from './icube';
 import { UtilsService } from 'src/app/threejs/utils.service';
 
 @Injectable()
@@ -16,9 +16,67 @@ export class TranslateService {
 
   /**
    * 
-   *
-  public translateDimensions(): Dimensions {
-    
+   * @param cubeData 
+   */
+  public translateCubeData(cubeData: CubeData): CubeData {
+    const cubeDataTranslate = { ...cubeData };
+    const dimensions = this.translateDimensions(cubeData.width, cubeData.length, cubeData.depth);
+    const position = this.translatePosition(cubeData.position);
+    const rotation = this.translateRotation(cubeData.rotation);
+
+    return {
+      width: dimensions.width,
+      length: dimensions.length,
+      depth: dimensions.depth,
+      rotation,
+      position
+    };
   }
-  */
+
+  /**
+   * 
+   * @param width 
+   * @param length 
+   * @param depth 
+   */
+  public translateDimensions(width: number, length: number, depth: number): Dimensions {
+
+    let newWidth: number;
+    let newLength: number;
+    let newDepth: number;
+    
+    if (this.adaptToSketchUp) {
+      newWidth = this.utilsService.convertoToMillimeter(length);
+      newLength = this.utilsService.convertoToMillimeter(width);
+      newDepth = this.utilsService.convertoToMillimeter(depth);
+    }    
+
+    return {
+      width: newWidth, length: newLength, depth: newDepth
+    };
+  }
+
+  /**
+   * 
+   * @param position 
+   */
+  public translatePosition(position: Axes): Axes {
+    if (this.adaptToSketchUp) {
+      return {
+        x: this.utilsService.convertoToMillimeter(position.x),
+        y: this.utilsService.convertoToMillimeter(position.z),
+        z: this.utilsService.convertoToMillimeter(position.y)
+      };
+    }
+    return position;
+  }
+
+  /**
+   * 
+   * @param rotation 
+   */
+  public translateRotation(rotation: Axes): Axes {
+    return rotation;
+  }
+
 }

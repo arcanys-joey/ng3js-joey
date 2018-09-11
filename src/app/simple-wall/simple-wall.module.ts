@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { WallComponentsService, WALL_DATA } from './wall-components.service';
 import { CubeService } from './cube.service';
 import { TranslateService } from './translate.service';
+import { CubeDataService } from './cube-data.service';
 import { Simple_Wall } from '../data/Simple_Wall';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { Simple_Wall } from '../data/Simple_Wall';
     },
     WallComponentsService,
     CubeService,
-    TranslateService
+    TranslateService,
+    CubeDataService
   ]
 })
 export class SimpleWallModule { }

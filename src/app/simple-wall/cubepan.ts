@@ -47,7 +47,7 @@ export class CubePan {
    */
   private populateDimensions(): void {
     this.width = this.cubeData.width;
-    this.length = this.cubeData.height ? this.cubeData.height : this.cubeData.length;
+    this.length = this.cubeData.length;
     this.depth = this.cubeData.depth;
   }
 
@@ -111,7 +111,17 @@ export class CubePan {
    * Returns the cube instance after calculations
    * @
    */
-  // public getCube(): Mesh {
-  // }
+  public getCube(): Mesh {
+    const geometry = new this.THREE.BoxBufferGeometry(this.width, this.length, this.depth);
+    const material = new this.THREE.MeshLambertMaterial({ 
+      color: 0x8b8b96,
+      ambient: 0x8b8b96,
+      emissive: 0x8b8b96
+    });
+    const cube = new this.THREE.Mesh(geometry, material);
+    cube.position.set(this.position.x, this.position.y, this.position.z);
+    cube.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
+    return cube;
+  }
 
 }

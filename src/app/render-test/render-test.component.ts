@@ -4,10 +4,14 @@ import { UtilsService } from 'src/app/threejs/utils.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 
+// borrowing this service from the simple wall, this is not correct and should be refactored if this comes up again
+import { TranslateService } from 'src/app/simple-wall/translate.service';
+
 @Component({
   selector: 'app-render-test',
   templateUrl: './render-test.component.html',
-  styleUrls: ['./render-test.component.scss']
+  styleUrls: ['./render-test.component.scss'],
+  providers: [ TranslateService ]
 })
 export class RenderTestComponent implements AfterViewInit {
 
@@ -33,6 +37,7 @@ export class RenderTestComponent implements AfterViewInit {
   constructor(
     private main3jsService: Main3jsService, 
     private utilsService: UtilsService,
+    private translateService: TranslateService,
     @Inject(THREEJS_TOKEN) private THREE
   ) { }
 
@@ -87,19 +92,20 @@ export class RenderTestComponent implements AfterViewInit {
    */
   private createCubes(): void {
     // start at the top plate
-    const translateTop = this.utilsService.translateToThree(35, 3700, 70);
+    const translateTop = this.translateService.translateDimensions(35, 3700, 70);        
+    console.log('translateTop', translateTop);
     const topPlate = this.createCube(translateTop.width, translateTop.length, translateTop.depth);
     topPlate.position.set(0, this.utilsService.convertoToMillimeter(2405), 0);    
     this.scene.add(topPlate);
 
     // bottom plate
-    const translateBottom = this.utilsService.translateToThree(35, 3700, 70);
+    const translateBottom = this.translateService.translateDimensions(35, 3700, 70);
     const bottomPlate = this.createCube(translateBottom.width, translateBottom.length, translateBottom.depth);
     bottomPlate.position.set(0, 0, 0);    
     this.scene.add(bottomPlate);
 
     // stud 1
-    const translateStud1 = this.utilsService.translateToThree(35, 2370, 70);
+    const translateStud1 = this.translateService.translateDimensions(35, 2370, 70);
     const stud1 = this.createCube(translateStud1.width, translateStud1.length, translateStud1.depth);
     // location -> 'x': 35, 'y': 0, 'z': 35
     // rotation -> 0, -90, 0
@@ -112,7 +118,7 @@ export class RenderTestComponent implements AfterViewInit {
     this.scene.add(stud1);
 
     // nog1
-    const translateNog1 = this.utilsService.translateToThree(35, 415, 70);
+    const translateNog1 = this.translateService.translateDimensions(35, 415, 70);
     const nog1 = this.createCube(translateNog1.width, translateNog1.length, translateNog1.depth, true);
     // location -> 'x': 35, 'y': 0, 'z': 1237.5
     // rotation -> 0, 0, 0
