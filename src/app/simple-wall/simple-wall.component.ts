@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
 import { Main3jsService } from 'src/app/threejs/main3js.service';
 import { UtilsService } from 'src/app/threejs/utils.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
+import { WallComponentsService } from './wall-components.service';
+import { CubeData } from './icube';
+import { CubeDataService } from './cube-data.service';
+import { CubeService } from './cube.service';
 
 @Component({
   selector: 'app-simple-wall',
@@ -31,8 +35,11 @@ export class SimpleWallComponent implements AfterViewInit {
   }
 
   constructor(
-    private main3jsService: Main3jsService, 
+    private wallComponentsService: WallComponentsService,
+    private main3jsService: Main3jsService,
     private utilsService: UtilsService,
+    private cubeDataService: CubeDataService,
+    private cubeService: CubeService,    
     @Inject(THREEJS_TOKEN) private THREE
   ) { }
 
@@ -41,7 +48,10 @@ export class SimpleWallComponent implements AfterViewInit {
    */
   ngAfterViewInit() {
     this.initVars();
-    this.createCubes();
+    this.renderTopPlates();
+    this.renderBottomPlates();
+    this.renderCommonStuds();
+    this.renderNogs();
     this.startRenderLoop();
   }
 
@@ -62,13 +72,9 @@ export class SimpleWallComponent implements AfterViewInit {
     this.camera = this.main3jsService.getCamera({
       aspectRatio: this.getAspectRatio(),
       cameraZPos: 10
-    });
-    this.camera.position.z = 10;
-    this.controls = this.main3jsService.getOrbitControls(this.camera, this.canvas);
-
+    });  
     this.axesHelper = this.main3jsService.getAxesHelper(25);
     this.scene.add(this.axesHelper);
-
     this.light = this.createLight();    
     this.scene.add(this.light);
   }
@@ -85,76 +91,69 @@ export class SimpleWallComponent implements AfterViewInit {
   /**
    * 
    */
-  private createCubes(): void {
-    // start at the top plate
-    const topPlate = this.createCube(
-      this.utilsService.convertoToMillimeter(35),
-      this.utilsService.convertoToMillimeter(3700),
-      this.utilsService.convertoToMillimeter(70),
-    );
-    topPlate.position.z = this.utilsService.convertoToMillimeter(2405);
-    this.scene.add(topPlate);
-
-    // bottom plate
-    const bottomPlate = this.createCube(
-      this.utilsService.convertoToMillimeter(35),
-      this.utilsService.convertoToMillimeter(3700),
-      this.utilsService.convertoToMillimeter(70),
-    );
-    bottomPlate.position.z = this.utilsService.convertoToMillimeter(0);
-    this.scene.add(bottomPlate);
-
-    // stud 1
-    const stud1 = this.createCube(
-      this.utilsService.convertoToMillimeter(35),
-      this.utilsService.convertoToMillimeter(3700),
-      this.utilsService.convertoToMillimeter(70),
-      true
-    );
-
-    stud1.position.set(
-      this.utilsService.convertoToMillimeter(35),
-      0,
-      this.utilsService.convertoToMillimeter(35),
-    );
-    this.scene.add(stud1);
-    
-  }
-
-  /**
-   * 
-   * @param width 
-   * width of the timber in millimeters
-   * @param height 
-   * height of the timber in millimeters
-   * @param depth 
-   * depth of the timber in millimeters
-   */
-  private createCube(width: number, length: number, depth: number, distinct?: boolean): Mesh {
-    const geometry = new this.THREE.BoxBufferGeometry(width, length, depth);
-    const material = new this.THREE.MeshLambertMaterial({ 
-      color: !distinct ? 0x8b8b96 : 0x005fbe,
-      ambient: !distinct ? 0x8b8b96 : 0x005fbe,
-      emissive: !distinct ? 0x8b8b96 : 0x005fbe
-    });
-    const cube = new this.THREE.Mesh(geometry, material);
-    return cube;
-  }
-
-  /**
-   * 
-   */
-  public onResize() {
+  public onResize(): void {
     this.camera.aspect = this.getAspectRatio();
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
+  /**
+   * 
+   */
+  private renderTopPlates(): void {
+    const topPlates = this.wallComponentsService.getTopPlates() as any;
+    for (let i = 0; i < topPlates.length; i++) {
+      const topPlate = topPlates[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(topPlate);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+    }
+  }
+
+  /**
+   * 
+   */
+  private renderBottomPlates(): void {
+    const bottomPlates = this.wallComponentsService.getBottomPlates() as any;
+    for (let i = 0; i < bottomPlates.length; i++) {
+      const bottomPlate = bottomPlates[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(bottomPlate);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+    }
+  }
+
+  /**
+   * 
+   */
+  private renderCommonStuds(): void {
+    const commonStuds = this.wallComponentsService.getCommonStuds() as any;
+    for (let i = 0; i < commonStuds.length; i++) {
+      const commonStud = commonStuds[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(commonStud);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+    }
+  }
+
+  /**
+   * 
+   */
+  private renderNogs(): void {
+    const nogs = this.wallComponentsService.getNogs() as any;
+    for (let i = 0; i < nogs.length; i++) {
+      const nog = nogs[i];
+      const cubeData: CubeData = this.cubeDataService.extractCubeData(nog);
+      const cube = this.cubeService.getCube(cubeData);
+      this.scene.add(cube);
+    }
+  }
 
   /**
    * 
    */
   private startRenderLoop(): void {
+    this.controls = this.main3jsService.getOrbitControls(this.camera, this.canvas);
     this.controls.update();
     const animate = () => {
       requestAnimationFrame(animate);
