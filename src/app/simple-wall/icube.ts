@@ -1,7 +1,13 @@
-export interface IAxes {
+export interface Axes {
   x: number;
   y: number;
   z: number;
+}
+
+export interface Dimensions {
+  width: number;
+  length: number;
+  depth: number;
 }
 
 export interface CubeData {
@@ -9,12 +15,12 @@ export interface CubeData {
     /**
    * @property
    */
-  position: IAxes;
+  position: Axes;
 
   /**
    * @property
    */
-  rotation: IAxes;
+  rotation: Axes;
 
   /**
    * @property

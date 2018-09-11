@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { CUBE_DATA } from './cube_data_token';
-import { IAxes, CubeData  } from './icube';
+import { Axes, CubeData  } from './icube';
 import { Mesh } from 'three';
 import { EXPANSION_PANEL_ANIMATION_TIMING } from '@angular/material';
 
@@ -11,12 +11,12 @@ export class CubePan {
   /**
    * @property
    */
-  private position: IAxes;
+  private position: Axes;
 
   /**
    * @property
    */
-  private rotation: IAxes;
+  private rotation: Axes;
 
   /**
    * @property
@@ -111,7 +111,7 @@ export class CubePan {
    * Returns the cube instance after calculations
    * @
    */
-  // public cube(): Mesh {
+  // public getCube(): Mesh {
   // }
 
 }

@@ -4,6 +4,7 @@ import { CubePan } from './cubepan';
 import { CubeData } from './icube';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { CUBE_DATA } from './cube_data_token';
+import { Mesh } from 'three';
 
 @Injectable()
 export class CubeService {
@@ -15,9 +16,30 @@ export class CubeService {
 
   /**
    * 
+   * @param cubeData 
+   *
+  public getCube(cubeData: CubeData): Mesh {
+    
+  }
+  */
+
+  /**
+   * 
+   * @param cubeData 
    */
-  public getCube(cubeData: CubeData): void {
-    // translate the cubeData
-    // 
+  private getCubePan(cubeData: CubeData): CubePan {
+    const injector = ReflectiveInjector.resolveAndCreate([
+      {
+        provide: CUBE_DATA,
+        useValue: cubeData
+      },
+      {
+        provide: THREEJS_TOKEN,
+        useValue: this.three
+      },
+      CubePan
+    ]);
+
+    return injector.get(CubePan);
   }
 }
