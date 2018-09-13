@@ -7,8 +7,10 @@ import { CubeData } from '../threejs/services/icube';
 import { CubeDataService } from 'src/app/threejs/services/cube-data.service';
 import { Main3jsService } from 'src/app/threejs/services/main3js.service';
 import { UtilsService } from 'src/app/threejs/services/utils.service';
+import { TranslateService } from 'src/app/threejs/services/translate.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
+import { Axes } from '../threejs/services/icube';
 
 @Component({
   selector: 'app-render-loop',
@@ -44,6 +46,7 @@ export class RenderLoopComponent implements AfterViewInit {
     private cubeService: CubeService,
     private main3jsService: Main3jsService,
     private utilsService: UtilsService,
+    private translateService: TranslateService,
     @Inject(THREEJS_TOKEN) private THREE
   ) { }
 
@@ -102,13 +105,66 @@ export class RenderLoopComponent implements AfterViewInit {
    * 
    */
   testRender(): void {
-    const componentsMap = this.componentMapService.getComponentsMap();
-    componentsMap.forEach((map) => {
-      const componentData = this.componentDataService.getComponentData(map);
-      const cubeData: CubeData = this.cubeDataService.extractCubeData(componentData);
-      const cube = this.cubeService.getCube(cubeData);
-      this.scene.add(cube);
+
+    const componentsGroupMap = this.componentMapService.getComponentGroupMap();
+
+    componentsGroupMap.forEach((groupMap) => {
+
+      const group = new this.THREE.Group();
+      const componentsMap = this.componentMapService
+        .getComponentsMap().filter((map) => 
+          map.levelIndex === groupMap.levelIndex 
+          && map.wallIndex === groupMap.wallIndex 
+          && map.wallFrameIndex === groupMap.wallFrameIndex
+        );      
+
+      const wallTransform = this.componentDataService.getWallTransform(groupMap.levelIndex, groupMap.wallIndex);
+      const wallFrameTransform = this.componentDataService.getWallFrameTransform(
+        groupMap.levelIndex, groupMap.wallIndex, groupMap.wallFrameIndex);
+
+      const wallPositionTransformTranslate = this.translateService.translatePosition(wallTransform.location);
+      const wallRotationTransformTranslate = this.translateService.translateRotation(wallTransform.rotation);
+      const wallFramePositionTransformTranslate = this.translateService.translatePosition(wallFrameTransform.location);
+      const walFrameRotationTransformTranslate = this.translateService.translateRotation(wallFrameTransform.rotation);
+      
+      this.updateRotation(group, wallRotationTransformTranslate);
+      this.updatePosition(group, wallPositionTransformTranslate);
+      this.scene.add(group);
+
+      componentsMap.forEach((map) => {
+        const componentData = this.componentDataService.getComponentData(map);
+        const cubeData: CubeData = this.cubeDataService.extractCubeData(componentData);
+        const cube = this.cubeService.getCube(cubeData);
+        this.updatePosition(cube, wallFramePositionTransformTranslate);
+        group.add(cube);
+      });            
     });    
+  }
+
+  /**
+   * This is temporary, it is ideal that we put this inside a service
+   * @param mesh 
+   * @param axes 
+   */
+  updatePosition(mesh: Mesh, axes: Axes): Mesh {
+    mesh.position.x += axes.x;
+    mesh.position.y += axes.y;
+    mesh.position.z += axes.z;
+
+    return mesh;
+  }
+
+  /**
+   * This is temporary, it is ideal that we put this inside a service
+   * @param mesh 
+   * @param axes 
+   */
+  updateRotation(mesh: Mesh, axes: Axes): Mesh {  
+    mesh.rotation.x += axes.x;
+    mesh.rotation.y += axes.y;
+    mesh.rotation.z += axes.z;
+
+    return mesh;
   }
 
   /**

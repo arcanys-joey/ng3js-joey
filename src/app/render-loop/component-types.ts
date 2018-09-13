@@ -42,6 +42,15 @@ export interface ComponentMap {
   partMapIndex: number;
 }
 
+/*
+ Components will be group togethers during rendering to respect the wall rotation data
+*/
+export interface ComponentGroupMap {
+  levelIndex: number;
+  wallIndex: number;
+  wallFrameIndex: number;
+}
+
 import { Axes } from '../threejs/services/icube';
 
 /**
@@ -56,7 +65,7 @@ export interface ComponentData {
 }
 
 export interface TransformData {
-  position: Axes;
+  location: Axes;
   rotation: Axes;
 }
 

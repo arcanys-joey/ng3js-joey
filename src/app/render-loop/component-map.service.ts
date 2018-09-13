@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DESIGN_DATA } from './tokens';
-import { ComponentMap, DESIGN_COMPONENT_PARTS, WALL_CLASSES, COMPONENT_PART_CLASSES } from './component-types';
+import { ComponentMap, ComponentGroupMap, DESIGN_COMPONENT_PARTS, WALL_CLASSES } from './component-types';
 
 @Injectable()
 export class ComponentMapService {
@@ -55,9 +55,55 @@ export class ComponentMapService {
   }
 
   /**
+   * generates component group map to be used for three grouping
+   */
+  private generateComponentGroupMap(): ComponentGroupMap[] {
+    const componentsGoupMap: ComponentGroupMap[] = [];
+
+    this.designData.levels.forEach((level, levelIndex) => {
+      level
+        .forEach((wall, wallIndex) => {
+          if (wall['^o'] !== WALL_CLASSES.WALL) {
+            return;
+          }
+          wall.wall_frames            
+            .forEach((wallFrame, wallFrameIndex) => {              
+              if (wallFrame['^o'] !== WALL_CLASSES.WALL_FRAME) {
+                return;
+              }
+              // filter if the wall is already added
+              let isExists = false;
+              componentsGoupMap.forEach((map) => {
+                if (map.wallIndex === wallIndex && map.wallFrameIndex === wallFrameIndex) {
+                  isExists = true;
+                }
+              });
+
+              if (!isExists) {
+                componentsGoupMap.push({
+                  levelIndex,
+                  wallIndex,
+                  wallFrameIndex
+                });
+              }
+            });
+        });
+    });
+
+    return componentsGoupMap;
+  }
+
+  /**
    * Returns the component map from the design file
    */
   public getComponentsMap(): ComponentMap[] {
     return this.generateMap();
+  }
+
+  /**
+   * Return component group map to be used for three grouping
+   */
+  public getComponentGroupMap(): ComponentGroupMap[] {
+    return this.generateComponentGroupMap();
   }
 }

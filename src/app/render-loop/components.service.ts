@@ -11,13 +11,9 @@ export class ComponentsService {
     private componentMapService: ComponentMapService,
     private componentDataService: ComponentDataService
   ) {
-    // console.log('design data', this.designData);
-    // console.log('component map', this.componentMapService.getComponentMap());
-    // const componentMap = this.componentMapService.getComponentMap()[0];
-    // console.log('map', componentMap);
-    // console.log('data', this.componentDataService.getComponentData(componentMap));
-    // console.log('wall transform data', this.componentDataService.getWallTransform(componentMap));
-    // console.log('wallframe transform data', this.componentDataService.getWallFrameTransform(componentMap));
+    console.log('design data', this.designData);
+    // console.log('components group map', this.componentMapService.getComponentGroupMap());
+    // console.log('components map', this.componentMapService.getComponentsMap());
   }
 
 }
