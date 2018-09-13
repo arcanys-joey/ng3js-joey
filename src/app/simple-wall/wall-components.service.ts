@@ -53,7 +53,7 @@ export class WallComponentsService {
    */
   public getTopPlates() {
     let topPlates = [];
-    for (let i = 0; i < this.wallFrames.length; i++) {      
+    for (let i = 0; i < this.wallFrames.length; i++) {
       topPlates = topPlates.concat(this.wallFrames[i].top_plates);
     }
     return topPlates;

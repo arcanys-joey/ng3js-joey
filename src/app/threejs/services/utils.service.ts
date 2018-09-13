@@ -23,8 +23,8 @@ export class UtilsService {
    * 
    * @param meter 
    */
-  public convertoToMillimeter(meter: number): number {
-    return meter / 1000;
+  public converToMeter(mm: number): number {
+    return mm / 1000;
   }
 
 }

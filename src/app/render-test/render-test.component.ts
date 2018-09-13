@@ -94,7 +94,7 @@ export class RenderTestComponent implements AfterViewInit {
     const translateTop = this.translateService.translateDimensions(35, 3700, 70);        
     console.log('translateTop', translateTop);
     const topPlate = this.createCube(translateTop.width, translateTop.length, translateTop.depth);
-    topPlate.position.set(0, this.utilsService.convertoToMillimeter(2405), 0);    
+    topPlate.position.set(0, this.utilsService.converToMeter(2405), 0);    
     this.scene.add(topPlate);
 
     // bottom plate
@@ -109,8 +109,8 @@ export class RenderTestComponent implements AfterViewInit {
     // location -> 'x': 35, 'y': 0, 'z': 35
     // rotation -> 0, -90, 0
     stud1.position.set(
-      this.utilsService.convertoToMillimeter(-1832.5),
-      this.utilsService.convertoToMillimeter(1202.5),
+      this.utilsService.converToMeter(-1832.5),
+      this.utilsService.converToMeter(1202.5),
       0
     );
     stud1.rotateZ(this.utilsService.radian(90));
@@ -122,8 +122,8 @@ export class RenderTestComponent implements AfterViewInit {
     // location -> 'x': 35, 'y': 0, 'z': 1237.5
     // rotation -> 0, 0, 0
     nog1.position.set(
-      this.utilsService.convertoToMillimeter(-1607.5),
-      this.utilsService.convertoToMillimeter(1237.5),
+      this.utilsService.converToMeter(-1607.5),
+      this.utilsService.converToMeter(1237.5),
       0
     );
     this.scene.add(nog1);

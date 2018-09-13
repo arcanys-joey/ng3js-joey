@@ -55,9 +55,9 @@ export class TranslateService {
     let newDepth: number;
     
     if (this.adaptToSketchUp) {
-      newWidth = this.utilsService.convertoToMillimeter(length);
-      newLength = this.utilsService.convertoToMillimeter(width);
-      newDepth = this.utilsService.convertoToMillimeter(depth);
+      newWidth = this.utilsService.converToMeter(length);
+      newLength = this.utilsService.converToMeter(width);
+      newDepth = this.utilsService.converToMeter(depth);
     }    
 
     return {
@@ -72,9 +72,9 @@ export class TranslateService {
   public translatePosition(position: Axes): Axes {
     if (this.adaptToSketchUp) {
       return {
-        x: this.utilsService.convertoToMillimeter(position.x),
-        y: this.utilsService.convertoToMillimeter(position.z),
-        z: -(this.utilsService.convertoToMillimeter(position.y))
+        x: this.utilsService.converToMeter(position.x),
+        y: this.utilsService.converToMeter(position.z),
+        z: -(this.utilsService.converToMeter(position.y))
       };
     }
     return position;

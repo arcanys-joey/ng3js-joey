@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'simple-wall',
     loadChildren: './simple-wall/simple-wall.module#SimpleWallModule'
   },
+  {
+    path: 'render-loop',
+    loadChildren: './render-loop/render-loop.module#RenderLoopModule'
+  },
   { 
     path: '',
     redirectTo: '/wth-cube',

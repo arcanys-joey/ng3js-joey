@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, AfterViewInit } from '@angular/core';
-import { Main3jsService } from 'src/app/threejs/main3js.service';
+import { Main3jsService } from 'src/app/threejs/services/main3js.service';
 import { THREEJS_TOKEN } from 'src/app/threejs/threejs.tokens';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, Mesh, SpotLight, OrbitControls } from 'three';
 
