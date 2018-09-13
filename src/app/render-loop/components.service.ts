@@ -11,7 +11,7 @@ export class ComponentsService {
     private componentMapService: ComponentMapService,
     private componentDataService: ComponentDataService
   ) {
-    console.log('design data', this.designData);
+    // console.log('design data', this.designData);
     // console.log('components group map', this.componentMapService.getComponentGroupMap());
     // console.log('components map', this.componentMapService.getComponentsMap());
   }

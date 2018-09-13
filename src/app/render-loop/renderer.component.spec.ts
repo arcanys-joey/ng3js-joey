@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SimpleWallComponent } from './simple-wall.component';
+import { RendererComponent } from './renderer.component';
 
-describe('SimpleWallComponent', () => {
-  let component: SimpleWallComponent;
-  let fixture: ComponentFixture<SimpleWallComponent>;
+describe('RendererComponent', () => {
+  let component: RendererComponent;
+  let fixture: ComponentFixture<RendererComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SimpleWallComponent ]
+      declarations: [ RendererComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SimpleWallComponent);
+    fixture = TestBed.createComponent(RendererComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

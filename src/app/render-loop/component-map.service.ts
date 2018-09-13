@@ -6,7 +6,7 @@ import { ComponentMap, ComponentGroupMap, DESIGN_COMPONENT_PARTS, WALL_CLASSES }
 export class ComponentMapService {
 
   constructor(@Inject(DESIGN_DATA) private designData: any) {
-    this.generateMap();
+    
   }
 
   /**

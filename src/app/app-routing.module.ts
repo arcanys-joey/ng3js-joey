@@ -14,10 +14,10 @@ const routes: Routes = [
     path: 'render-test',
     loadChildren: './render-test/render-test.module#RenderTestModule'
   },
-  {
-    path: 'simple-wall',
-    loadChildren: './simple-wall/simple-wall.module#SimpleWallModule'
-  },
+  // {
+  //   path: 'simple-wall',
+  //   loadChildren: './simple-wall/simple-wall.module#SimpleWallModule'
+  // },
   {
     path: 'render-loop',
     loadChildren: './render-loop/render-loop.module#RenderLoopModule'
